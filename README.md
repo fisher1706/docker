@@ -48,7 +48,7 @@
     docker rmi hello-world
 ```
 
-# to remove image "hello-world"
+# to remove container "hello-world"
 ```shell
     docker rm hello-world
 ```
