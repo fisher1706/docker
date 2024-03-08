@@ -1,6 +1,5 @@
 # https://www.youtube.com/watch?v=I18TNwZ2Nqg
 
-
 # docker command
 
 # to see all images "OR"
@@ -79,6 +78,26 @@
 ```
 
 
+# https://www.youtube.com/watch?v=Sa7uOGczoHc&list=PLU2ftbIeotGoGFC_2lj-OplT_cItXfu48&index=1
+# -------------------------------------------Set Run Docker Without Sudo------------------------------------------------
+
+# create group "docker"
+```shell
+sudo groupadd docker
+```
+
+# add user to group "docker"
+```shell
+sudo usermod -aG docker $USER
+```
+
+# update changes in groups
+```shell
+newgrp docker
+```
+# ----------------------------------------------------------------------------------------------------------------------
+
+# docker + [Tab] -> to see all docker commands
 
 # delete all container
 ```shell
@@ -98,6 +117,11 @@ docker run -it alpine sh
 # start container -> [sleepy_raman] - name of container
 ```shell
 docker start sleepy_raman
+```
+
+# to exit from container -> run in container
+```shell
+exit
 ```
 
 # stop container -> [sleepy_raman] - name of container
@@ -122,12 +146,83 @@ docker exec -it pg bash
 
 # command for start container has number "1" - is "1" stop -> exit from container 
 
-# attach to docker process [stupefied_hopper] - name of container -> can be not active
+# attach to docker process [sleepy_visvesvaraya] - name of running container
 ```shell
-docker attach stupefied_hopper
+docker attach sleepy_visvesvaraya
 ```
 
-# start postgres with open port -> port local - first
+# exit from process of container without "stop" container
+# [Ctrl] + [P] next [Ctrl] + [Q]
+
+
+# start postgres with open [port] -> port local - first
 ```shell
-docker run --name pg -e POSTGRES_PASSWORD=123 -d -p 5433:5433 postgres
+docker run -d --name pg -e POSTGRES_PASSWORD=123 -p 5432:5432 postgres
 ```
+
+# connect to postgres by command line -> "in local pc -> connect to pgAdmin -> work write now - password: [qwerty]"
+```shell
+sudo -u postgres psql -h localhost
+```
+
+# attach volume to container -> "-v [local path]:[container path]"
+```shell
+docker run -it -v /home/fisher:/home/new_fisher alpine
+```
+
+# ------------------------------------------------create images---------------------------------------------------------
+
+# 1. download container -> set nme for container [node-dru]
+```shell
+docker run -it --name node-dru alpine sh
+```
+
+# 2. add nodejs in container -> work in container
+```shell
+apk add nodejs
+```
+
+# 3. check nodejs
+```shell
+node --version
+```
+
+# 4. exit from container
+```shell
+exit
+```
+# 5. create image -> [fzapel] - name of account on docker hub
+#                    [node-dru] - name of repository
+#                    [v20.1] - version
+```shell
+docker commit node-dru fzapel/node-dru:v20.1
+```
+
+# 6. login to dockerhub -> user_name[fzapel], password[zapel1706]
+```shell
+docker login
+```
+
+# 7. push image to dockerhub
+```shell
+docker push fzapel/node-dru:v20.1
+```
+
+# -------------------------------------------DOCKERFILE-----------------------------------------------------------------
+
+# create image from Dockerfile -> [-t] - tag for image -> [.] - take Dockerfile from current dir
+```shell
+cd test_docker && docker build -t fzapel/node:v1 .
+```
+
+# start container -> according to current Dockerfile -> folder "test_docker" can see on http://127.0.0.1:3000/
+```shell
+docker run -it --name node-dru -p 3000:8080 fzapel/node:v1
+```
+
+# push image on dockerhub
+```shell
+docker push fzapel/node:v1
+```
+
+# 1. Dockerfile with [git]
