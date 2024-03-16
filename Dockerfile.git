@@ -1,1 +1,9 @@
-FROM
+FROM alpine
+
+RUN apk add git \
+    && git clone https://github.com/fisher1706/docker.git \
+    && cd docker
+
+CMD ["python", "main.py"]
+
+EXPOSE 3000

@@ -139,7 +139,7 @@ docker pull postgres:10.8
 docker run --name pg -e POSTGRES_PASSWORD=postgres -d postgres
 ```
 
-# run command in container -> [exec] -> [pg] - name of container -> [bash] - command
+# run command in container from command line -> [exec] -> [pg] - name of container -> [bash] - command
 ```shell
 docker exec -it pg bash
 ```
@@ -191,7 +191,9 @@ node --version
 ```shell
 exit
 ```
-# 5. create image -> [fzapel] - name of account on docker hub
+# 5. create image -> format: [name of container] [name of account on dockerhub]/[name of repository]:[version]
+#                    [node-dru] - name of container
+#                    [fzapel] - name of account on docker hub
 #                    [node-dru] - name of repository
 #                    [v20.1] - version
 ```shell
@@ -226,3 +228,44 @@ docker push fzapel/node:v1
 ```
 
 # 1. Dockerfile with [git]
+```shell
+docker build -t fzapel/test_internal:v1 -f Dockerfile.git .
+```
+
+# -------------------------------------------docker compose-------------------------------------------------------------
+
+# create image -> to find [dockerfile] in dir [docker_compose]
+```shell
+docker build -t fisher-php ./docker_compose
+```
+
+# check image -> must have image [fisher-php]
+```shell
+docker images
+```
+
+# start container [fisher-php] with name [zapel]
+```shell
+docker run --name zapel -p 8000:80 -d fisher-php
+```
+
+# to see started containers
+```shell
+docker info
+```
+
+# start docker-compose [postgres]
+```shell
+cd docker_compose && docker-compose build && docker-compose up
+```
+
+# localhost:8080 -> phpMyAdmin -> [user] - root -> [password] - 12345
+
+# start docker-compose [mysql]
+```shell
+docker-compose build && docker-compose up
+```
+
+# localhost:8080 -> phpMyAdmin -> [user] - root -> [password] - 12345
+
+# stop containers [Ctrl] + [C]
